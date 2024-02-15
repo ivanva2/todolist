@@ -1,0 +1,45 @@
+
+
+<head>
+    {% load static %}
+    <link  rel="stylesheet" href="{% static 'css/stile.css' %}">
+</head>
+<body>
+<h1> To do list</h1> 
+
+<form action="/addTodoItem/" method = "post">{% csrf_token %}
+    <input type="text" name="content">
+    <input class="button" type="submit" value="Add Todo Item">
+</form> 
+
+<ul >
+    {% for i in all_items %} 
+    {% if not i.completed  %}
+    <li class="p">{{i.content }}
+        <form  action="/deleteTodoItem/{{i.id}}/" method = "post">{% csrf_token %}
+            <input class="button_del" type="submit" value="Delete">
+        </form> 
+        <form  action="/comletedTodoitem/{{i.id}}/" method = "post">{% csrf_token %}
+            <input class="button" type="submit" value="completed">
+        </form>
+    </li>
+    {% endif %} 
+    {% endfor %}
+</ul> 
+
+
+<ul class="list">
+    {% for i in all_items %} 
+    {% if i.completed  %}
+    <li class="completed">{{i.content}}
+        <form action="/deleteTodoItem/{{i.id}}/" method = "post">{% csrf_token %}
+            <input class="button_del" type="submit" value="Delete">
+        </form> 
+    </li> 
+    {% endif %} 
+    {% endfor %} 
+</ul>
+
+</body>
+
+
